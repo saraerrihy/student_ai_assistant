@@ -1,0 +1,88 @@
+﻿LLM-Based Multi-Agent Systems
+
+Ce projet consiste à construire des systèmes multi-agents basés sur des modèles de langage (LLM) en utilisant LangChain, LangGraph et Ollama. Le but est de créer des agents intelligents capables de raisonner, utiliser des outils et collaborer pour répondre à des questions ou accomplir des tâches.
+
+Un agent LLM est un système capable de comprendre une demande, réfléchir et agir. Il utilise souvent le modèle ReAct (Reason + Act) :
+1. L’agent réfléchit à la question
+2. Il décide s’il doit utiliser un outil
+3. Il appelle l’outil si nécessaire
+4. Il observe le résultat
+5. Il donne une réponse finale
+
+Ollama est utilisé pour exécuter les modèles de langage en local (comme llama3), sans API externe. LangChain permet de connecter le modèle avec des outils et des instructions. LangGraph permet d’organiser les agents sous forme de graphe.
+
+--------------------------------------------------
+
+Agent simple (ReAct)
+
+Un agent simple peut utiliser des outils comme :
+- une fonction pour obtenir la date et l’heure
+- une calculatrice pour évaluer des expressions mathématiques
+
+L’agent choisit automatiquement quand utiliser ces outils pour répondre à la question.
+
+--------------------------------------------------
+
+Système multi-agents
+
+Un système multi-agents contient plusieurs agents spécialisés qui collaborent entre eux :
+
+- Researcher : collecte des informations sur un sujet
+- Writer : rédige un texte basé sur ces informations
+- Reviewer : corrige et améliore le texte
+
+Les agents communiquent à travers un état partagé contenant :
+- topic : sujet
+- research : informations collectées
+- draft : texte écrit
+- review : commentaires
+- final_output : résultat final
+- status : état actuel
+
+--------------------------------------------------
+
+Pipeline de traitement
+
+Le flux de travail est :
+
+Researcher → Writer → Reviewer → Résultat final
+
+Chaque agent lit et met à jour les données dans l’état partagé.
+
+--------------------------------------------------
+
+Routage conditionnel
+
+Le système peut prendre des décisions :
+
+- Si le texte est APPROVED → fin
+- Sinon → retour au Writer pour correction
+
+Cela permet d’améliorer automatiquement le résultat final.
+
+--------------------------------------------------
+
+Concepts clés
+
+- Ollama : exécute les modèles LLM localement
+- LangChain : connecte les modèles, outils et prompts
+- LangGraph : gère les agents et leur communication
+- @tool : transforme une fonction en outil utilisable
+- StateGraph : structure de partage entre agents
+- ReAct : méthode de raisonnement + action
+- Multi-agent system : collaboration entre plusieurs agents
+
+--------------------------------------------------
+
+Améliorations possibles
+
+- Ajouter un agent Summarizer pour résumer le texte final
+- Ajouter un agent Supervisor pour contrôler le flux
+- Limiter le nombre de boucles pour éviter les répétitions
+- Ajouter un système RAG pour utiliser des documents externes
+
+--------------------------------------------------
+
+Conclusion
+
+Ce système permet de créer des agents intelligents capables de collaborer, raisonner et utiliser des outils. Grâce à Ollama, tout fonctionne localement sans API, ce qui rend le projet autonome et efficace.
